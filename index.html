@@ -9,6 +9,7 @@
 <meta property="og:description" content="최지우 — 웹디자인 &amp; 퍼블리싱 포트폴리오">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ko_KR">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Pretendard&display=swap" rel="stylesheet">
@@ -25,6 +26,7 @@
       <a href="#top" class="active">Home</a>
       <a href="#about">About</a>
       <a href="#projects">Projects</a>
+      <a href="#design">Design</a>
       <a href="#contact">Contact</a>
     </nav>
     <div class="nav-actions">
@@ -188,10 +190,60 @@
   </div>
 </section>
 
+<!-- ================= DESIGN WORKS (가로 스크롤) ================= -->
+<section class="design-works" id="design">
+  <div class="inner design-works-head">
+    <p class="eyebrow light">03 · DESIGN WORKS</p>
+    <h2 class="section-title">Design</h2>
+    <p class="section-sub">이미지를 클릭해 보세요</p>
+  </div>
+
+  <div class="design-scroll" id="designScroll">
+    <div class="design-track" id="designTrack">
+
+      <figure class="design-item" data-tool="Ai">
+        <img src="work1.jpg" alt="점심 뭐먹지 타이포그래피 포스터" loading="lazy">
+        <span class="tool-badge tool-ai">Ai</span>
+      </figure>
+
+      <figure class="design-item" data-tool="Ai">
+        <img src="work2.jpg" alt="이사준비 체크리스트 카드뉴스" loading="lazy">
+        <span class="tool-badge tool-ai">Ai</span>
+      </figure>
+
+      <figure class="design-item" data-tool="Ai">
+        <img src="work3.jpg" alt="지금사면 완전할인 프로모션 배너" loading="lazy">
+        <span class="tool-badge tool-ai">Ai</span>
+      </figure>
+
+      <figure class="design-item" data-tool="Ps">
+        <img src="work4.jpg" alt="함덕해변 비치코밍 페스티벌 포스터" loading="lazy">
+        <span class="tool-badge tool-ps">Ps</span>
+      </figure>
+
+      <figure class="design-item" data-tool="Ps">
+        <img src="work5.jpg" alt="Natural Care Cat 제품 상세페이지" loading="lazy">
+        <span class="tool-badge tool-ps">Ps</span>
+      </figure>
+
+      <figure class="design-item" data-tool="Ps">
+        <img src="work6.jpg" alt="푸릇푸릇 인테리어 카드뉴스" loading="lazy">
+        <span class="tool-badge tool-ps">Ps</span>
+      </figure>
+
+      <figure class="design-item" data-tool="Ps">
+        <img src="work7.jpg" alt="이디베이크 한입마카롱 포스터" loading="lazy">
+        <span class="tool-badge tool-ps">Ps</span>
+      </figure>
+
+    </div>
+  </div>
+</section>
+
 <!-- ================= CONTACT ================= -->
 <section class="contact" id="contact">
   <div class="inner">
-    <p class="eyebrow light">03 · CONTACT</p>
+    <p class="eyebrow light">04 · CONTACT</p>
     <h2 class="section-title">Let's Work Together!</h2>
 
     <!-- <div class="contact-icons">
@@ -219,6 +271,12 @@
     <p>© 2026 최지우. All Rights Reserved.</p>
   </div>
 </footer>
+
+<!-- ================= IMAGE LIGHTBOX ================= -->
+<div class="lightbox-backdrop" id="lightboxBackdrop">
+  <button class="lightbox-close" id="lightboxClose">×</button>
+  <img class="lightbox-img" id="lightboxImg" src="" alt="">
+</div>
 
 <!-- ================= MODAL ================= -->
 <div class="modal-backdrop" id="modalBackdrop">
