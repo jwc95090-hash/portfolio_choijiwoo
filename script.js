@@ -122,28 +122,49 @@ modalBackdrop.addEventListener('click', (e) => { if (e.target === modalBackdrop)
 const lightboxBackdrop = document.getElementById('lightboxBackdrop');
 const lightboxImg = document.getElementById('lightboxImg');
 const lightboxClose = document.getElementById('lightboxClose');
+const lightboxPrev = document.getElementById('lightboxPrev');
+const lightboxNext = document.getElementById('lightboxNext');
 
 const designTrack = document.getElementById('designTrack');
+let designImages = [];
 if (designTrack) {
+  const originalItems = Array.from(designTrack.children);
+  originalItems.forEach((item, i) => item.setAttribute('data-index', i));
+  designImages = originalItems.map(item => {
+    const img = item.querySelector('img');
+    return { src: img.src, alt: img.alt };
+  });
   // 끊김 없이 무한으로 흐르도록 아이템을 한 번 복제해 뒤에 이어붙임
-  Array.from(designTrack.children).forEach(item => {
+  originalItems.forEach(item => {
     const clone = item.cloneNode(true);
     clone.setAttribute('aria-hidden', 'true');
     designTrack.appendChild(clone);
   });
 }
 
+let currentIndex = 0;
+function openLightbox(index) {
+  if (!designImages.length) return;
+  currentIndex = (index + designImages.length) % designImages.length;
+  const data = designImages[currentIndex];
+  lightboxImg.src = data.src;
+  lightboxImg.alt = data.alt;
+  lightboxBackdrop.classList.add('open');
+}
+
 document.querySelectorAll('.design-item').forEach(item => {
-  item.addEventListener('click', () => {
-    const img = item.querySelector('img');
-    lightboxImg.src = img.src;
-    lightboxImg.alt = img.alt;
-    lightboxBackdrop.classList.add('open');
-  });
+  item.addEventListener('click', () => openLightbox(Number(item.dataset.index)));
 });
+lightboxPrev.addEventListener('click', (e) => { e.stopPropagation(); openLightbox(currentIndex - 1); });
+lightboxNext.addEventListener('click', (e) => { e.stopPropagation(); openLightbox(currentIndex + 1); });
 lightboxClose.addEventListener('click', () => lightboxBackdrop.classList.remove('open'));
 lightboxBackdrop.addEventListener('click', (e) => { if (e.target === lightboxBackdrop) lightboxBackdrop.classList.remove('open'); });
-window.addEventListener('keydown', (e) => { if (e.key === 'Escape') lightboxBackdrop.classList.remove('open'); });
+window.addEventListener('keydown', (e) => {
+  if (!lightboxBackdrop.classList.contains('open')) return;
+  if (e.key === 'Escape') lightboxBackdrop.classList.remove('open');
+  if (e.key === 'ArrowRight') openLightbox(currentIndex + 1);
+  if (e.key === 'ArrowLeft') openLightbox(currentIndex - 1);
+});
 
 /* ---------- Scroll-driven reveal (IntersectionObserver) ---------- */
 const revealSelectors = '.bento-card, .project-card, .contact-icons, .design-item';

@@ -240,7 +240,7 @@ input, textarea{font-family:inherit;}
   gap:28px;
   padding:10px 0 30px;
   width:max-content;
-  animation:designMarquee 48s linear infinite;
+  animation:designMarquee 62s linear infinite;
 }
 .design-scroll:hover .design-track{animation-play-state:paused;}
 
@@ -281,7 +281,7 @@ input, textarea{font-family:inherit;}
 
 @media(max-width:760px){
   .design-item{width:340px;}
-  .design-track{animation-duration:32s;}
+  .design-track{animation-duration:42s;}
 }
 
 /* ---------------- IMAGE LIGHTBOX ---------------- */
@@ -301,6 +301,22 @@ input, textarea{font-family:inherit;}
   transition:background .2s;
 }
 .lightbox-close:hover{background:rgba(255,255,255,.12);}
+
+.lightbox-nav{
+  position:absolute; top:50%; transform:translateY(-50%);
+  width:52px; height:52px; border-radius:50%; color:#fff; font-size:34px;
+  display:flex; align-items:center; justify-content:center;
+  background:rgba(255,255,255,.08); transition:background .2s;
+  line-height:1;
+}
+.lightbox-nav:hover{background:rgba(255,255,255,.18);}
+.lightbox-prev{left:16px;}
+.lightbox-next{right:16px;}
+@media(max-width:640px){
+  .lightbox-nav{width:42px; height:42px; font-size:26px;}
+  .lightbox-prev{left:6px;}
+  .lightbox-next{right:6px;}
+}
 
 /* ---------------- CONTACT ---------------- */
 .contact{padding:130px 0 70px;}
