@@ -20,15 +20,32 @@ themeToggle.addEventListener('click', () => {
   applyTheme(current === 'dark' ? 'light' : 'dark');
 });
 
-/* ---------- 커스텀 커서 ---------- */
+/* ---------- 커스텀 커서 (dot + lerp로 따라오는 ring, junni.co.jp 스타일) ---------- */
 const cursorDot = document.getElementById('cursorDot');
+const cursorRing = document.getElementById('cursorRing');
+let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+let ringX = mouseX, ringY = mouseY;
+
 window.addEventListener('mousemove', (e) => {
-  cursorDot.style.left = e.clientX + 'px';
-  cursorDot.style.top = e.clientY + 'px';
+  mouseX = e.clientX; mouseY = e.clientY;
+  cursorDot.style.left = mouseX + 'px';
+  cursorDot.style.top = mouseY + 'px';
 });
-document.querySelectorAll('a, button, input, textarea').forEach(el => {
-  el.addEventListener('mouseenter', () => { cursorDot.style.width = '30px'; cursorDot.style.height = '30px'; cursorDot.style.background = 'rgba(91,79,233,.15)'; });
-  el.addEventListener('mouseleave', () => { cursorDot.style.width = '16px'; cursorDot.style.height = '16px'; cursorDot.style.background = 'transparent'; });
+
+function tickCursorRing() {
+  ringX += (mouseX - ringX) * 0.16;
+  ringY += (mouseY - ringY) * 0.16;
+  if (cursorRing) {
+    cursorRing.style.left = ringX + 'px';
+    cursorRing.style.top = ringY + 'px';
+  }
+  requestAnimationFrame(tickCursorRing);
+}
+requestAnimationFrame(tickCursorRing);
+
+document.querySelectorAll('a, button, input, textarea, .design-item, .ai-card, .bento-card').forEach(el => {
+  el.addEventListener('mouseenter', () => cursorRing?.classList.add('hover'));
+  el.addEventListener('mouseleave', () => cursorRing?.classList.remove('hover'));
 });
 
 /* ---------- 네비게이션: 스크롤 배경 + 스크롤스파이 + 스무스스크롤 ---------- */
@@ -190,3 +207,100 @@ const io = new IntersectionObserver((entries) => {
 }, { threshold: 0.15 });
 
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* ============================================================
+   Junni.co.jp 스타일 인터랙션 레이어
+   - 텍스트 split 등장 애니메이션
+   - 커튼(패널) 와이프 리빌
+   - 버튼 마그네틱 효과
+   - 카드 마우스 틸트
+   ============================================================ */
+
+/* ---------- 1) 타이틀 split-word 등장 애니메이션 ---------- */
+function wrapWords(el) {
+  const text = el.innerHTML;
+  // <br>, <em>는 보존하면서 텍스트 노드만 단어 단위로 분리
+  const html = text
+    .split(/(<br>|<em>|<\/em>)/g)
+    .map(chunk => {
+      if (chunk === '<br>' || chunk === '<em>' || chunk === '</em>') return chunk;
+      return chunk
+        .split(' ')
+        .filter(w => w.length)
+        .map(word => `<span class="split-word">${word}</span>`)
+        .join(' ');
+    })
+    .join('');
+  el.innerHTML = html;
+}
+
+document.querySelectorAll('[data-split]').forEach(el => {
+  wrapWords(el);
+  const words = el.querySelectorAll('.split-word');
+  words.forEach((w, i) => w.style.setProperty('--i', i));
+});
+
+const splitIO = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.querySelectorAll('.split-word').forEach(w => w.classList.add('in-view'));
+      splitIO.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.4 });
+document.querySelectorAll('[data-split]').forEach(el => splitIO.observe(el));
+
+/* 히어로 타이틀은 즉시(로드 시) 등장 */
+document.querySelectorAll('[data-split-hero]').forEach(el => {
+  wrapWords(el);
+  const words = el.querySelectorAll('.split-word');
+  words.forEach((w, i) => w.style.setProperty('--i', i));
+  requestAnimationFrame(() => {
+    setTimeout(() => words.forEach(w => w.classList.add('in-view')), 100);
+  });
+});
+
+/* ---------- 2) 커튼(패널) 와이프 리빌 ---------- */
+document.querySelectorAll('.curtain-reveal').forEach(el => {
+  const color = el.dataset.curtainColor;
+  if (color) el.style.setProperty('--curtain-c', color);
+});
+
+const curtainIO = new IntersectionObserver((entries) => {
+  entries.forEach((entry, idx) => {
+    if (entry.isIntersecting) {
+      const delay = Array.from(entry.target.parentElement?.children || []).indexOf(entry.target) * 60;
+      setTimeout(() => entry.target.classList.add('curtain-open'), Math.min(delay, 300));
+      curtainIO.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.2 });
+document.querySelectorAll('.curtain-reveal').forEach(el => curtainIO.observe(el));
+
+/* ---------- 3) 버튼 마그네틱 효과 ---------- */
+document.querySelectorAll('.magnetic').forEach(el => {
+  el.addEventListener('mousemove', (e) => {
+    const rect = el.getBoundingClientRect();
+    const relX = e.clientX - rect.left - rect.width / 2;
+    const relY = e.clientY - rect.top - rect.height / 2;
+    el.style.transform = `translate(${relX * 0.25}px, ${relY * 0.35}px)`;
+  });
+  el.addEventListener('mouseleave', () => {
+    el.style.transform = 'translate(0,0)';
+  });
+});
+
+/* ---------- 4) 카드 마우스 틸트 ---------- */
+document.querySelectorAll('.bento-card, .ai-card, .project-card').forEach(card => {
+  card.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    const px = (e.clientX - rect.left) / rect.width - 0.5;
+    const py = (e.clientY - rect.top) / rect.height - 0.5;
+    card.style.setProperty('--rx', (px * 6).toFixed(2) + 'deg');
+    card.style.setProperty('--ry', (-py * 6).toFixed(2) + 'deg');
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.setProperty('--rx', '0deg');
+    card.style.setProperty('--ry', '0deg');
+  });
+});
