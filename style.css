@@ -158,7 +158,7 @@ input, textarea{font-family:inherit;}
 .intro-meta{display:flex; flex-direction:column; gap:10px; font-size:14.5px;}
 .intro-meta span{display:inline-block; width:78px; color:var(--ink-soft); font-weight:700;}
 
-.card-skills{grid-column:3/5; grid-row:1/2;}
+.card-skills{grid-column:3/5; grid-row:2/3;}
 .card-skills h3{font-size:18px; margin-bottom:16px;}
 .skill-badges{display:flex; flex-wrap:wrap; gap:9px;}
 .skill-badges span{background:var(--bg-soft); border:1px solid var(--line); padding:7px 14px; border-radius:999px; font-size:13.5px; font-weight:600;}
@@ -170,7 +170,7 @@ input, textarea{font-family:inherit;}
 .stat span{display:block; font-size:13px; color:var(--ink-soft); margin-top:2px;}
 .stat em{display:block; font-style:normal; font-size:11px; color:var(--ink-soft); opacity:.7;}
 
-.card-cert{grid-column:3/5; grid-row:2/3;}
+.card-cert{grid-column:3/5; grid-row:1/2;}
 .card-edu{grid-column:1/5; grid-row:3/4;}
 .record-list{list-style:none; display:flex; flex-direction:column; gap:10px; font-size:14.5px;}
 .record-list .year{color:var(--ink-soft); font-weight:700; margin-right:10px; display:block; font-size:13.5px;}
@@ -333,10 +333,11 @@ input, textarea{font-family:inherit;}
   width:44px; height:44px; border-radius:12px; margin-bottom:18px;
   font-size:19px; font-weight:800; color:#fff;
 }
-.ai-icon-gpt{background:#10A37F;}
+.ai-icon svg{display:block;}
+.ai-icon-gpt{background:#10A37F; --ai-gpt-bg:#10A37F;}
 .ai-icon-claude{background:#DA7756;}
-.ai-icon-figma{background:linear-gradient(135deg,#F24E1E,#A259FF);}
-.ai-icon-code{background:var(--dark-panel); color:var(--violet);}
+.ai-icon-figma{background:#fff; border:1px solid var(--line);}
+.ai-icon-code{background:linear-gradient(135deg,#0065A9,#007ACC); color:#fff;}
 .ai-card h3{font-size:19px; margin-bottom:14px; line-height:1.3;}
 .ai-card h3 small{display:block; font-size:12.5px; font-weight:600; color:var(--ink-soft); margin-top:2px;}
 .ai-desc{list-style:none; display:flex; flex-direction:column; gap:7px; margin-bottom:20px;}
