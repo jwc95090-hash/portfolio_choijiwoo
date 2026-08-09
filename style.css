@@ -197,6 +197,7 @@ input, textarea{font-family:inherit;}
 .tag-row{display:flex; gap:7px; flex-wrap:wrap; margin-bottom:14px;}
 .tag-row span{font-size:12px; font-weight:700; color:var(--violet-deep); background:rgba(91,79,233,.12); padding:5px 12px; border-radius:999px;}
 .project-body h3{font-size:20px; margin-bottom:10px;}
+.project-meta{font-size:13px; font-weight:600; color:var(--violet-deep); margin-bottom:12px !important;}
 .project-body p{font-size:15px; color:var(--ink-soft); margin-bottom:18px;}
 .quick-link{
   display:inline-flex; align-items:center; gap:7px;
@@ -453,7 +454,7 @@ input, textarea{font-family:inherit;}
   transition-delay:calc(var(--i,0) * 45ms);
 }
 .split-word.in-view{opacity:1; transform:translateY(0) rotate(0);}
-.section-title.center{ }
+.section-title.center{text-align:center;}
 
 /* curtain reveal: a color panel wipes away to uncover the element */
 .curtain-reveal{position:relative; overflow:hidden;}
