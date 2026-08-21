@@ -79,8 +79,16 @@ navLinks.forEach(link => {
 /* ---------- 모바일 메뉴 토글 ---------- */
 const navToggle = document.getElementById('navToggle');
 const navLinksEl = document.getElementById('navLinks');
-navToggle.addEventListener('click', () => navLinksEl.classList.toggle('open'));
-navLinksEl.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinksEl.classList.remove('open')));
+navToggle.addEventListener('click', () => {
+  const open = navLinksEl.classList.toggle('open');
+  navToggle.setAttribute('aria-expanded', String(open));
+  navToggle.setAttribute('aria-label', open ? '메뉴 닫기' : '메뉴 열기');
+});
+navLinksEl.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  navLinksEl.classList.remove('open');
+  navToggle.setAttribute('aria-expanded', 'false');
+  navToggle.setAttribute('aria-label', '메뉴 열기');
+}));
 
 /* ---------- 프로젝트 카드 전체 클릭 시 이동 ---------- */
 document.querySelectorAll('.project-card.is-clickable').forEach(card => {
