@@ -21,6 +21,7 @@
 - 모바일 하단 탭·가로형 퀵메뉴, 키보드 접근성, SEO 메타데이터
 
 - Website: https://jwc95090-hash.github.io/trippick-site/
+- Portfolio: https://jwc95090-hash.github.io/portfolio_choijiwoo/trippick-portfolio.html
 - Guide: https://jwc95090-hash.github.io/trippick-site/pages/guide.html
 - Github: https://github.com/jwc95090-hash/trippick-site
 
@@ -28,7 +29,7 @@
 
 예약·상담·매출·리뷰를 한 화면에서 관리하는 호스트 전용 관리자 콘솔입니다.
 
-- Website: https://jwc95090-hash.github.io/trippick-host/
+- Website: https://jwc95090-hash.github.io/trippick-site/trippick-host/
 - Github: https://github.com/jwc95090-hash/trippick-host
 
 ### 3. 당근부동산 리디자인
