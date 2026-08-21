@@ -5,6 +5,8 @@
 
 [포트폴리오 사이트](https://jwc95090-hash.github.io/portfolio_choijiwoo/) · [TRIPPICK 프로젝트](https://jwc95090-hash.github.io/portfolio_choijiwoo/trippick-portfolio.html) · [당근부동산 프로젝트](https://jwc95090-hash.github.io/portfolio_choijiwoo/karrot-portfolio.html)
 
+<img src="./assets/images/portfolio-cover.jpg" alt="최지우 UI/UX 웹디자인 포트폴리오 대표 이미지" width="900">
+
 ## 포트폴리오 한눈에 보기
 
 | 구분 | 내용 |
@@ -105,7 +107,7 @@ portfolio_choijiwoo/
 - CSS와 JavaScript를 각각 `css/`, `js/`로 이동했습니다.
 - 개인 편집기 설정인 `.vscode/`와 사용하지 않는 이전 포트폴리오 이미지를 제거했습니다.
 - 모든 HTML·Open Graph 참조를 새 경로로 함께 변경해 GitHub Pages 배포 경로를 유지했습니다.
-- 긴 프로젝트 JPG는 다음 단계에서 WebP/AVIF 또는 실제 HTML 섹션으로 최적화할 예정입니다.
+- 긴 프로젝트 JPG와 갤러리 이미지를 화면 용도에 맞게 리사이즈·압축했습니다. 다음 단계에서는 WebP/AVIF 또는 실제 HTML 섹션 전환을 검토합니다.
 
 ## 트러블슈팅과 배운 점
 
