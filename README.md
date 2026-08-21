@@ -82,31 +82,30 @@ Figma 화면에 머물지 않고 시맨틱 HTML, 반응형 CSS, JavaScript 인�
 
 ```text
 portfolio_choijiwoo/
-├── index.html                  # 포트폴리오 메인
-├── style.css                  # 공통 스타일·반응형·테마
-├── script.js                  # 메뉴·테마·스크롤·라이트박스
-├── trippick-portfolio.html     # TRIPPICK 상세 뷰어
-├── karrot-portfolio.html       # 당근부동산 상세 뷰어
-├── Frame 26087181.jpg          # TRIPPICK 긴 포트폴리오 이미지
-├── Frame 26087185.jpg          # 당근부동산 긴 포트폴리오 이미지
-├── work1.jpg ~ work9.jpg       # 그래픽 디자인 작업
-└── favicon.svg
-```
-
-### 저장소 정리 메모
-
-현재는 GitHub Pages 경로 호환을 위해 파일을 루트에 유지합니다. 다음 리팩터링에서는 배포 링크를 함께 수정하면서 `assets/images/`, `assets/projects/`, `css/`, `js/`로 분리하는 구조가 적합합니다. `.vscode/`는 개인 편집기 설정이므로 향후 `.gitignore`에 포함하는 것을 권장합니다.
-
-```text
-권장 구조
+├── index.html
+├── trippick-portfolio.html
+├── karrot-portfolio.html
 ├── assets/
+│   ├── icons/favicon.svg
 │   ├── images/
+│   │   ├── portfolio-cover.jpg
+│   │   └── work-01.jpg ~ work-09.jpg
 │   └── projects/
-├── css/
-├── js/
-├── docs/
-└── index.html
+│       ├── trippick-case-study.jpg
+│       └── karrot-case-study.jpg
+├── css/style.css
+├── js/script.js
+├── README.md
+└── .gitignore
 ```
+
+### 정리 기준
+
+- 이미지·아이콘·프로젝트 결과물을 `assets/` 아래 역할별로 분리했습니다.
+- CSS와 JavaScript를 각각 `css/`, `js/`로 이동했습니다.
+- 개인 편집기 설정인 `.vscode/`와 사용하지 않는 이전 포트폴리오 이미지를 제거했습니다.
+- 모든 HTML·Open Graph 참조를 새 경로로 함께 변경해 GitHub Pages 배포 경로를 유지했습니다.
+- 긴 프로젝트 JPG는 다음 단계에서 WebP/AVIF 또는 실제 HTML 섹션으로 최적화할 예정입니다.
 
 ## 트러블슈팅과 배운 점
 
