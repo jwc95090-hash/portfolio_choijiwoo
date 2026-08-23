@@ -2,27 +2,11 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>당근부동산 UX/UI Redesign | 최지우</title>
-<meta name="description" content="당근부동산 UX/UI 리디자인 케이스 스터디. 리서치와 사용자 흐름, 와이어프레임, 검증, 디자인 시스템을 담았습니다.">
-<meta name="theme-color" content="#f7f7f7">
-<style>
-:root{color-scheme:light;--bg:#f7f7f7;--panel:rgba(255,255,255,.88);--line:rgba(0,0,0,.16);--accent:#ff6500}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg)}body{font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;overflow-x:hidden}
-.toolbar{position:fixed;z-index:20;top:max(12px,env(safe-area-inset-top));left:12px;right:12px;display:flex;justify-content:space-between;pointer-events:none}
-.toolbar a,.toolbar button{pointer-events:auto;border:1px solid var(--line);border-radius:999px;background:var(--panel);backdrop-filter:blur(14px);color:#262626;padding:10px 14px;font:600 13px/1 inherit;text-decoration:none;cursor:pointer;box-shadow:0 8px 30px rgba(0,0,0,.09)}
-.viewer{width:100%;max-width:1920px;margin:0 auto;overflow:hidden}.case-image{display:block;width:100%;height:auto}
-.zoom-hint{display:none}
-:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
-@media(max-width:720px){.toolbar{top:max(8px,env(safe-area-inset-top));left:8px;right:8px}.toolbar a,.toolbar button{padding:9px 11px;font-size:12px}.viewer.is-zoomed{overflow-x:auto}.viewer.is-zoomed .case-image{width:980px;max-width:none}.zoom-hint{display:block;position:fixed;z-index:19;left:50%;bottom:max(12px,env(safe-area-inset-bottom));transform:translateX(-50%);margin:0;padding:8px 11px;border-radius:999px;background:rgba(28,28,28,.78);color:#fff;font-size:11px;white-space:nowrap;opacity:0;transition:.25s}.viewer.is-zoomed+.zoom-hint{opacity:1}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.zoom-hint{transition:none}}
-@media print{.toolbar,.zoom-hint{display:none}.viewer{max-width:none}}
-</style>
+<meta name="description" content="당근부동산 UX/UI 리디자인 전체 프레임">
+<meta name="theme-color" content="#f8f8f8">
+<style>*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#f8f8f8}main{width:100%;max-width:850px;margin:0 auto}img{display:block;width:100%;height:auto}</style>
 </head>
-<body>
-<nav class="toolbar" aria-label="케이스 스터디 도구"><a href="index.html#projects">← 포트폴리오 홈</a><button id="zoom" type="button" aria-pressed="false">원본 크기 보기</button></nav>
-<main class="viewer" id="viewer"><img class="case-image" src="assets/projects/karrot-case-study.jpg" width="1440" height="19220" alt="당근부동산 UX/UI 리디자인 케이스 스터디 전체 프레임. 데스크 리서치, 경쟁사 분석, 페르소나와 사용자 여정, 문제 정의, 사용자 흐름, 정보 구조, 와이어프레임, 설문 검증, 최종 UI와 디자인 시스템으로 구성됩니다."></main>
-<p class="zoom-hint">좌우로 이동해 원본 크기로 확인하세요</p>
-<script>const b=document.querySelector('#zoom'),v=document.querySelector('#viewer');b.addEventListener('click',()=>{const on=v.classList.toggle('is-zoomed');b.setAttribute('aria-pressed',on);b.textContent=on?'화면에 맞추기':'원본 크기 보기'});</script>
-</body>
+<body><main><img src="assets/projects/karrot-case-study.jpg" width="850" height="10956" alt="당근부동산 UX/UI 리디자인 케이스 스터디 전체 이미지"></main></body>
 </html>
