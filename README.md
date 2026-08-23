@@ -67,7 +67,8 @@ Figma 화면에 머물지 않고 시맨틱 HTML, 반응형 CSS, JavaScript 인�
 - 스크롤 기반 등장 효과와 커스텀 인터랙션
 - 디자인 작업 이미지 라이트박스
 - 모바일 내비게이션과 접근 가능한 상태값
-- 본문 바로가기, 키보드 포커스, 시맨틱 영역
+- 본문 바로가기, 키보드 포커스, 시맨틱 영역, 모달 포커스 순환·복귀
+- 모션 감소 설정과 정밀 포인터 여부에 따른 커스텀 커서 제어
 - 프로젝트별 긴 이미지를 원본 비율로 보여주는 반응형 HTML 뷰어
 
 ## 기술 스택
@@ -93,10 +94,13 @@ portfolio_choijiwoo/
 │   │   ├── portfolio-cover.jpg
 │   │   └── work-01.jpg ~ work-09.jpg
 │   └── projects/
-│       ├── trippick-case-study.jpg
-│       └── karrot-case-study.jpg
+│       ├── trippick-case-study-01.webp ~ 04.webp
+│       └── karrot-case-study-01.webp ~ 03.webp
 ├── css/style.css
 ├── js/script.js
+├── tools/check-site.mjs
+├── .github/workflows/quality.yml
+├── package.json
 ├── README.md
 └── .gitignore
 ```
@@ -107,7 +111,9 @@ portfolio_choijiwoo/
 - CSS와 JavaScript를 각각 `css/`, `js/`로 이동했습니다.
 - 개인 편집기 설정인 `.vscode/`와 사용하지 않는 이전 포트폴리오 이미지를 제거했습니다.
 - 모든 HTML·Open Graph 참조를 새 경로로 함께 변경해 GitHub Pages 배포 경로를 유지했습니다.
-- 긴 프로젝트 JPG와 갤러리 이미지를 화면 용도에 맞게 리사이즈·압축했습니다. 다음 단계에서는 WebP/AVIF 또는 실제 HTML 섹션 전환을 검토합니다.
+- 긴 프로젝트 이미지를 WebP 조각으로 나눠 첫 조각만 우선 로드하고 나머지는 지연 로드합니다.
+- 사용하지 않는 이전 JPG는 최종 전달본에서 제외해 같은 결과물의 중복 보관을 없앴습니다.
+- 이미지형 케이스 스터디에도 제목, 요약, 프로젝트 목록 복귀 링크를 보조기기용 시맨틱 콘텐츠로 추가했습니다.
 
 ## 트러블슈팅과 배운 점
 
@@ -136,6 +142,8 @@ GitHub Pages 배포 방법:
 4. 저장 후 생성된 공개 URL 확인
 
 현재 저장소는 이미 GitHub Pages로 배포되어 있습니다.
+
+`npm run check`로 HTML의 로컬 파일 참조를 확인할 수 있습니다. 이 수정본은 로컬 검토용이며 원격 저장소에는 자동 반영되지 않습니다.
 
 ## Contact
 
