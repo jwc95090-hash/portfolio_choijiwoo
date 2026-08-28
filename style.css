@@ -171,7 +171,7 @@ input, textarea{font-family:inherit;}
 .stat em{display:block; font-style:normal; font-size:11px; color:var(--ink-soft); opacity:.7;}
 
 .card-cert{grid-column:3/5; grid-row:1/2;}
-.card-edu{grid-column:1/5; grid-row:3/4;}
+.card-edu{grid-column:3/5; grid-row:2/2;}
 .record-list{list-style:none; display:flex; flex-direction:column; gap:10px; font-size:14.5px;}
 .record-list .year{color:var(--ink-soft); font-weight:700; margin-right:10px; display:block; font-size:13.5px;}
 .cert-list{list-style:none; display:flex; flex-direction:column; gap:12px;}
