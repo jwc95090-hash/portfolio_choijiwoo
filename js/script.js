@@ -5,6 +5,7 @@
 /* ---------- 다크모드 토글 (localStorage에 저장) ---------- */
 const root = document.documentElement;
 const themeToggle = document.getElementById('themeToggle');
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 function applyTheme(theme) {
   root.setAttribute('data-theme', theme);
@@ -23,30 +24,32 @@ themeToggle.addEventListener('click', () => {
 /* ---------- 커스텀 커서 (dot + lerp로 따라오는 ring, junni.co.jp 스타일) ---------- */
 const cursorDot = document.getElementById('cursorDot');
 const cursorRing = document.getElementById('cursorRing');
-let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
-let ringX = mouseX, ringY = mouseY;
-
-window.addEventListener('mousemove', (e) => {
-  mouseX = e.clientX; mouseY = e.clientY;
-  cursorDot.style.left = mouseX + 'px';
-  cursorDot.style.top = mouseY + 'px';
-});
-
-function tickCursorRing() {
-  ringX += (mouseX - ringX) * 0.16;
-  ringY += (mouseY - ringY) * 0.16;
-  if (cursorRing) {
-    cursorRing.style.left = ringX + 'px';
-    cursorRing.style.top = ringY + 'px';
-  }
+const supportsCustomCursor = window.matchMedia('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)').matches;
+if (supportsCustomCursor && cursorDot && cursorRing) {
+  let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+  let ringX = mouseX, ringY = mouseY;
+  window.addEventListener('mousemove', (event) => {
+    mouseX = event.clientX;
+    mouseY = event.clientY;
+    cursorDot.style.left = `${mouseX}px`;
+    cursorDot.style.top = `${mouseY}px`;
+  }, { passive: true });
+  const tickCursorRing = () => {
+    ringX += (mouseX - ringX) * 0.16;
+    ringY += (mouseY - ringY) * 0.16;
+    cursorRing.style.left = `${ringX}px`;
+    cursorRing.style.top = `${ringY}px`;
+    requestAnimationFrame(tickCursorRing);
+  };
   requestAnimationFrame(tickCursorRing);
+  document.querySelectorAll('a, button, input, textarea, .design-item, .ai-card, .bento-card').forEach(el => {
+    el.addEventListener('mouseenter', () => cursorRing.classList.add('hover'));
+    el.addEventListener('mouseleave', () => cursorRing.classList.remove('hover'));
+  });
+} else {
+  cursorDot?.remove();
+  cursorRing?.remove();
 }
-requestAnimationFrame(tickCursorRing);
-
-document.querySelectorAll('a, button, input, textarea, .design-item, .ai-card, .bento-card').forEach(el => {
-  el.addEventListener('mouseenter', () => cursorRing?.classList.add('hover'));
-  el.addEventListener('mouseleave', () => cursorRing?.classList.remove('hover'));
-});
 
 /* ---------- 네비게이션: 스크롤 배경 + 스크롤스파이 + 스무스스크롤 ---------- */
 const nav = document.getElementById('nav');
@@ -71,7 +74,7 @@ navLinks.forEach(link => {
     const target = document.querySelector(targetId);
     if (target) {
       e.preventDefault();
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      target.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'start' });
     }
   });
 });
@@ -79,14 +82,34 @@ navLinks.forEach(link => {
 /* ---------- 모바일 메뉴 토글 ---------- */
 const navToggle = document.getElementById('navToggle');
 const navLinksEl = document.getElementById('navLinks');
-navToggle.addEventListener('click', () => navLinksEl.classList.toggle('open'));
-navLinksEl.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinksEl.classList.remove('open')));
+navToggle.addEventListener('click', () => {
+  const open = navLinksEl.classList.toggle('open');
+  navToggle.setAttribute('aria-expanded', String(open));
+  navToggle.setAttribute('aria-label', open ? '메뉴 닫기' : '메뉴 열기');
+});
+navLinksEl.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  navLinksEl.classList.remove('open');
+  navToggle.setAttribute('aria-expanded', 'false');
+  navToggle.setAttribute('aria-label', '메뉴 열기');
+}));
 
 /* ---------- 프로젝트 카드 전체 클릭 시 이동 ---------- */
 document.querySelectorAll('.project-card.is-clickable').forEach(card => {
-  card.addEventListener('click', () => {
+  const openProject = () => {
     const url = card.dataset.goto;
-    if (url) window.open(url, '_blank');
+    if (!url) return;
+    const opened = window.open(url, '_blank', 'noopener,noreferrer');
+    if (opened) opened.opener = null;
+  };
+  card.setAttribute('role', 'link');
+  card.tabIndex = 0;
+  card.setAttribute('aria-label', `${card.querySelector('h3')?.textContent.trim() || '프로젝트'} 새 창에서 보기`);
+  card.addEventListener('click', openProject);
+  card.addEventListener('keydown', event => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      openProject();
+    }
   });
   card.querySelectorAll('a, button').forEach(el => {
     el.addEventListener('click', (e) => e.stopPropagation());
@@ -118,6 +141,34 @@ const stories = {
 const modalBackdrop = document.getElementById('modalBackdrop');
 const modalContent = document.getElementById('modalContent');
 const modalClose = document.getElementById('modalClose');
+let modalReturnFocus = null;
+
+function focusableElements(container) {
+  return Array.from(container.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'));
+}
+
+function trapDialogFocus(event, container) {
+  if (event.key !== 'Tab') return;
+  const focusable = focusableElements(container);
+  if (!focusable.length) return;
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault();
+    last.focus();
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault();
+    first.focus();
+  }
+}
+
+function closeStoryModal() {
+  if (!modalBackdrop.classList.contains('open')) return;
+  modalBackdrop.classList.remove('open');
+  modalBackdrop.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('dialog-open');
+  modalReturnFocus?.focus();
+}
 
 document.querySelectorAll('.overlay-btn').forEach(btn => {
   btn.addEventListener('click', () => {
@@ -125,15 +176,20 @@ document.querySelectorAll('.overlay-btn').forEach(btn => {
     if (!s) return;
     modalContent.innerHTML = `
       <h3>${s.tag}</h3>
-      <h4>${s.title}</h4>
+      <h4 id="modalTitle">${s.title}</h4>
       <p><strong>문제 :</strong> ${s.problem}</p>
       <p><strong>해결 :</strong> ${s.solve}</p>
     `;
+    modalReturnFocus = btn;
     modalBackdrop.classList.add('open');
+    modalBackdrop.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('dialog-open');
+    modalClose.focus();
   });
 });
-modalClose.addEventListener('click', () => modalBackdrop.classList.remove('open'));
-modalBackdrop.addEventListener('click', (e) => { if (e.target === modalBackdrop) modalBackdrop.classList.remove('open'); });
+modalClose.addEventListener('click', closeStoryModal);
+modalBackdrop.addEventListener('click', (event) => { if (event.target === modalBackdrop) closeStoryModal(); });
+modalBackdrop.addEventListener('keydown', event => trapDialogFocus(event, modalBackdrop));
 
 /* ---------- 디자인 워크 갤러리: 무한 자동 슬라이드 + 라이트박스 ---------- */
 const lightboxBackdrop = document.getElementById('lightboxBackdrop');
@@ -160,6 +216,7 @@ if (designTrack) {
 }
 
 let currentIndex = 0;
+let lightboxReturnFocus = null;
 function openLightbox(index) {
   if (!designImages.length) return;
   currentIndex = (index + designImages.length) % designImages.length;
@@ -167,18 +224,48 @@ function openLightbox(index) {
   lightboxImg.src = data.src;
   lightboxImg.alt = data.alt;
   lightboxBackdrop.classList.add('open');
+  lightboxBackdrop.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('dialog-open');
+  lightboxClose.focus();
 }
 
-document.querySelectorAll('.design-item').forEach(item => {
-  item.addEventListener('click', () => openLightbox(Number(item.dataset.index)));
+function closeLightbox() {
+  if (!lightboxBackdrop.classList.contains('open')) return;
+  lightboxBackdrop.classList.remove('open');
+  lightboxBackdrop.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('dialog-open');
+  lightboxImg.src = '';
+  lightboxReturnFocus?.focus();
+}
+
+document.querySelectorAll('.design-item:not([aria-hidden="true"])').forEach(item => {
+  item.setAttribute('role', 'button');
+  item.tabIndex = 0;
+  item.setAttribute('aria-label', `${item.querySelector('img')?.alt || '디자인 작업'} 확대보기`);
+  const activate = () => {
+    lightboxReturnFocus = item;
+    openLightbox(Number(item.dataset.index));
+  };
+  item.addEventListener('click', activate);
+  item.addEventListener('keydown', event => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      activate();
+    }
+  });
 });
 lightboxPrev.addEventListener('click', (e) => { e.stopPropagation(); openLightbox(currentIndex - 1); });
 lightboxNext.addEventListener('click', (e) => { e.stopPropagation(); openLightbox(currentIndex + 1); });
-lightboxClose.addEventListener('click', () => lightboxBackdrop.classList.remove('open'));
-lightboxBackdrop.addEventListener('click', (e) => { if (e.target === lightboxBackdrop) lightboxBackdrop.classList.remove('open'); });
+lightboxClose.addEventListener('click', closeLightbox);
+lightboxBackdrop.addEventListener('click', (e) => { if (e.target === lightboxBackdrop) closeLightbox(); });
+lightboxBackdrop.addEventListener('keydown', event => trapDialogFocus(event, lightboxBackdrop));
 window.addEventListener('keydown', (e) => {
+  if (modalBackdrop.classList.contains('open') && e.key === 'Escape') {
+    closeStoryModal();
+    return;
+  }
   if (!lightboxBackdrop.classList.contains('open')) return;
-  if (e.key === 'Escape') lightboxBackdrop.classList.remove('open');
+  if (e.key === 'Escape') closeLightbox();
   if (e.key === 'ArrowRight') openLightbox(currentIndex + 1);
   if (e.key === 'ArrowLeft') openLightbox(currentIndex - 1);
 });
@@ -278,7 +365,7 @@ const curtainIO = new IntersectionObserver((entries) => {
 document.querySelectorAll('.curtain-reveal').forEach(el => curtainIO.observe(el));
 
 /* ---------- 3) 버튼 마그네틱 효과 ---------- */
-document.querySelectorAll('.magnetic').forEach(el => {
+if (!prefersReducedMotion) document.querySelectorAll('.magnetic').forEach(el => {
   el.addEventListener('mousemove', (e) => {
     const rect = el.getBoundingClientRect();
     const relX = e.clientX - rect.left - rect.width / 2;
@@ -291,7 +378,7 @@ document.querySelectorAll('.magnetic').forEach(el => {
 });
 
 /* ---------- 4) 카드 마우스 틸트 ---------- */
-document.querySelectorAll('.bento-card, .ai-card, .project-card').forEach(card => {
+if (!prefersReducedMotion) document.querySelectorAll('.bento-card, .ai-card, .project-card').forEach(card => {
   card.addEventListener('mousemove', (e) => {
     const rect = card.getBoundingClientRect();
     const px = (e.clientX - rect.left) / rect.width - 0.5;
