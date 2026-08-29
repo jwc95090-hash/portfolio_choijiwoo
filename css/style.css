@@ -483,3 +483,63 @@ input, textarea{font-family:inherit;}
   .nav-toggle{display:flex;}
   .top h1{font-size:42px;}
 }
+
+/* ---------------- WIDE DESKTOP TYPE SCALE (1024px+, 1920 데스크톱 가독성 강화) ---------------- */
+@media(min-width:1024px){
+  body{font-size:17.5px;}
+
+  .eyebrow{font-size:15px;}
+  .section-title{font-size:44px;}
+  .section-sub{font-size:18px;}
+
+  .logo{font-size:23px;}
+  .nav-links{font-size:17px;}
+
+  .top h1{font-size:clamp(48px,7.5vw,92px);}
+  .top-slogan{font-size:20px;}
+  .hero-tags span{font-size:14.5px;}
+  .skill-chip{font-size:15.5px;}
+  .scroll-cue{font-size:13px;}
+
+  .bento-tag{font-size:13px;}
+  .card-intro h3{font-size:29px;}
+  .card-intro p{font-size:17px;}
+  .intro-meta{font-size:16px;}
+  .card-skills h3{font-size:20px;}
+  .skill-badges span{font-size:14.5px;}
+  .stat strong{font-size:33px;}
+  .stat span{font-size:14px;}
+  .stat em{font-size:12px;}
+  .record-list{font-size:16px;}
+  .record-list .year{font-size:14.5px;}
+  .cert-date{font-size:14.5px;}
+  .cert-info strong{font-size:16px;}
+  .cert-info p{font-size:14px;}
+
+  .thumb-label{font-size:27px;}
+  .tag-row span{font-size:13px;}
+  .project-body h3{font-size:23px;}
+  .project-meta{font-size:14px;}
+  .project-body p{font-size:17px;}
+  .ps-item span{font-size:12px;}
+  .ps-item p{font-size:14.5px;}
+  .quick-link{font-size:15.5px;}
+  .link-row{font-size:15.5px;}
+  .overlay-btn{font-size:14px;}
+
+  .ai-card h3{font-size:20px;}
+  .ai-tools{font-size:15px;}
+  .ai-summary{font-size:15px;}
+
+  .skill-tool-group-title{font-size:13px;}
+  .st-icon{font-size:16px;}
+  .st-text strong{font-size:16px;}
+  .skill-tool-row p{font-size:16px;}
+
+  .c-icon{font-size:17px;}
+  .footer p{font-size:14.5px;}
+
+  .modal h3{font-size:14px;}
+  .modal h4{font-size:23px;}
+  .modal p{font-size:16.5px;}
+}
