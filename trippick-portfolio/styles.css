@@ -21,3 +21,17 @@ body {
   height: auto;
   image-rendering: auto;
 }
+
+.overview-image,
+.portfolio-rest {
+  margin: 0;
+}
+
+.portfolio-rest {
+  overflow: hidden;
+}
+
+/* 기존 전체 보드에서 첫 16:9 개요 프레임(657 × 374px)을 숨긴다. */
+.portfolio-rest img {
+  margin-top: -56.925419%;
+}
