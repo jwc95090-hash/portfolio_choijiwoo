@@ -1,0 +1,67 @@
+name: Sync portfolio reference assets
+
+on:
+  push:
+    paths:
+      - '.github/workflows/sync-portfolio-reference-assets.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  sync-assets:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Pillow
+        run: python -m pip install --quiet pillow
+
+      - name: Download exact Figma renders
+        run: |
+          mkdir -p /tmp/portfolio-sync assets/portfolio
+          curl --fail --location --retry 3 --retry-delay 2 \
+            'https://www.figma.com/api/mcp/asset/2261f79f-01e1-471e-8633-117dc0c6af66.png' \
+            --output /tmp/portfolio-sync/daangn-v4-full.png
+          curl --fail --location --retry 3 --retry-delay 2 \
+            'https://www.figma.com/api/mcp/asset/34ef3f7c-94f2-45a5-ace9-f872ad68446a.png' \
+            --output /tmp/portfolio-sync/trippick-final-full.png
+
+      - name: Build exact website images
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from PIL import Image
+
+          out = Path('assets/portfolio')
+          out.mkdir(parents=True, exist_ok=True)
+
+          # Daangn revised v5 reference = revised_v4 composition with the leading
+          # 1054.667px Contents section removed. The next section begins at y=1054.667.
+          with Image.open('/tmp/portfolio-sync/daangn-v4-full.png') as im:
+              crop_y = round(1054.66748046875)
+              v5 = im.crop((0, crop_y, im.width, im.height))
+              v5.save(out / 'daangn-realestate-ux-portfolio_revised_v5.png', optimize=True)
+
+          # Trippick uses the exact final_reviewed_2026 frame render.
+          with Image.open('/tmp/portfolio-sync/trippick-final-full.png') as im:
+              im.save(out / 'trippick-ux-portfolio_final_reviewed_2026.png', optimize=True)
+
+          for p in sorted(out.glob('*.png')):
+              with Image.open(p) as im:
+                  print(p, im.size, p.stat().st_size)
+          PY
+
+      - name: Commit generated assets
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/portfolio/daangn-realestate-ux-portfolio_revised_v5.png \
+                  assets/portfolio/trippick-ux-portfolio_final_reviewed_2026.png
+          if git diff --cached --quiet; then
+            echo 'No asset changes.'
+            exit 0
+          fi
+          git commit -m 'Sync exact Daangn v5 and Trippick portfolio renders'
+          git push
