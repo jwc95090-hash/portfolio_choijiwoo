@@ -23,14 +23,14 @@ body {
   image-rendering: auto;
 }
 
-/* 첫 페이지 원본 이미지에 포함된 '개선 전·후 프로토타입' 버튼 전체를 배경과 동일하게 가림 */
+/* 첫 페이지 원본 이미지에 포함된 '개선 전·후 프로토타입' 버튼만 배경색으로 가림 */
 .prototype-button-mask {
   position: absolute;
   z-index: 3;
-  left: 5.55%;
-  top: 11.10%;
-  width: 12.70%;
-  height: 0.37%;
+  left: 5.45%;
+  top: 10.12%;
+  width: 13%;
+  height: 0.42%;
   display: block;
   background: #fafafa;
   pointer-events: none;
