@@ -232,7 +232,13 @@ input, textarea{font-family:inherit;}
 .design-works{padding:120px 0 100px;}
 .design-works-head{margin-bottom:36px;}
 .design-works-intro{display:flex; align-items:center; justify-content:space-between; gap:28px;}
+.design-works-copy{display:grid; gap:7px;}
 .design-works-head .section-sub{max-width:none; line-height:1.75; white-space:nowrap;}
+.design-click-hint{
+  display:flex; align-items:center; gap:7px;
+  margin:0; color:var(--ink-soft); font-size:13px; font-weight:600; line-height:1.5;
+}
+.design-click-hint span{color:var(--violet); font-size:15px;}
 .design-view-all{
   flex:0 0 auto;
   display:inline-flex; align-items:center; gap:8px;
@@ -273,7 +279,7 @@ input, textarea{font-family:inherit;}
   overflow:hidden;
   border:1px solid var(--line);
   box-shadow:var(--shadow);
-  cursor:pointer;
+  cursor:zoom-in;
   transition:transform .3s ease, box-shadow .3s ease;
 }
 .design-item:hover{transform:translateY(-6px);}
@@ -302,6 +308,7 @@ input, textarea{font-family:inherit;}
 @media(max-width:760px){
   .design-works-intro{align-items:flex-start; flex-direction:column; gap:16px;}
   .design-works-head .section-sub{white-space:normal;}
+  .design-click-hint{font-size:12px;}
   .design-item{width:340px;}
   .design-item--app-flow{width:230px;}
   .design-track{animation-duration:54s;}
