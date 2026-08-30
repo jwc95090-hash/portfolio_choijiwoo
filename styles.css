@@ -24,6 +24,10 @@ body {
   background: #000;
 }
 
+.portfolio-page-daangn {
+  background: #f7f7f7;
+}
+
 .figma-render {
   display: block;
   width: 100%;
@@ -31,4 +35,17 @@ body {
   height: auto;
   margin: 0 auto;
   border: 0;
+}
+
+.figma-render-stack {
+  width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
+  line-height: 0;
+}
+
+.figma-render-stack .figma-render {
+  max-width: none;
+  margin: 0;
+  border-radius: 0;
 }
