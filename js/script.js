@@ -167,11 +167,37 @@ const lightboxImg = document.getElementById('lightboxImg');
 const lightboxClose = document.getElementById('lightboxClose');
 const lightboxPrev = document.getElementById('lightboxPrev');
 const lightboxNext = document.getElementById('lightboxNext');
+const lightboxZoom = document.getElementById('lightboxZoom');
+const lightboxCounter = document.getElementById('lightboxCounter');
+const designViewAll = document.getElementById('designViewAll');
 
 const designTrack = document.getElementById('designTrack');
 let designImages = [];
 if (designTrack) {
-  const originalItems = Array.from(designTrack.children);
+  const mixedDesignOrder = [
+    'figma-blubrick-app-flow.jpg',
+    'work-04.jpg',
+    'work-01.jpg',
+    'figma-blubrick-web-home.jpg',
+    'work-05.jpg',
+    'work-02.jpg',
+    'figma-blubrick-web-menu.jpg',
+    'work-06.jpg',
+    'work-03.jpg',
+    'figma-blubrick-web-about.jpg',
+    'work-07.jpg',
+    'work-08.jpg',
+    'work-09.jpg'
+  ];
+  const orderMap = new Map(mixedDesignOrder.map((fileName, index) => [fileName, index]));
+  const originalItems = Array.from(designTrack.children)
+    .filter(item => !item.hidden)
+    .sort((a, b) => {
+      const aFile = a.querySelector('img')?.getAttribute('src')?.split('/').pop();
+      const bFile = b.querySelector('img')?.getAttribute('src')?.split('/').pop();
+      return (orderMap.get(aFile) ?? 999) - (orderMap.get(bFile) ?? 999);
+    });
+  originalItems.forEach(item => designTrack.appendChild(item));
   originalItems.forEach((item, i) => item.setAttribute('data-index', i));
   designImages = originalItems.map(item => {
     const img = item.querySelector('img');
@@ -187,12 +213,20 @@ if (designTrack) {
 
 let currentIndex = 0;
 let lightboxReturnFocus = null;
+function setLightboxZoom(zoomed) {
+  lightboxBackdrop.classList.toggle('is-zoomed', zoomed);
+  lightboxZoom.setAttribute('aria-pressed', String(zoomed));
+  lightboxZoom.textContent = zoomed ? '화면 맞춤' : '확대';
+}
+
 function openLightbox(index) {
   if (!designImages.length) return;
   currentIndex = (index + designImages.length) % designImages.length;
   const data = designImages[currentIndex];
   lightboxImg.src = data.src;
   lightboxImg.alt = data.alt;
+  lightboxCounter.textContent = `${currentIndex + 1} / ${designImages.length}`;
+  setLightboxZoom(false);
   lightboxBackdrop.classList.add('open');
   lightboxBackdrop.setAttribute('aria-hidden', 'false');
   document.body.classList.add('dialog-open');
@@ -204,11 +238,12 @@ function closeLightbox() {
   lightboxBackdrop.classList.remove('open');
   lightboxBackdrop.setAttribute('aria-hidden', 'true');
   document.body.classList.remove('dialog-open');
+  setLightboxZoom(false);
   lightboxImg.src = '';
   lightboxReturnFocus?.focus();
 }
 
-document.querySelectorAll('.design-item:not([aria-hidden="true"])').forEach(item => {
+document.querySelectorAll('.design-item:not([aria-hidden="true"]):not([hidden])').forEach(item => {
   item.setAttribute('role', 'button');
   item.tabIndex = 0;
   item.setAttribute('aria-label', `${item.querySelector('img')?.alt || '디자인 작업'} 확대보기`);
@@ -224,11 +259,43 @@ document.querySelectorAll('.design-item:not([aria-hidden="true"])').forEach(item
     }
   });
 });
+designViewAll?.addEventListener('click', () => {
+  lightboxReturnFocus = designViewAll;
+  openLightbox(0);
+});
 lightboxPrev.addEventListener('click', (e) => { e.stopPropagation(); openLightbox(currentIndex - 1); });
 lightboxNext.addEventListener('click', (e) => { e.stopPropagation(); openLightbox(currentIndex + 1); });
+lightboxZoom.addEventListener('click', (event) => {
+  event.stopPropagation();
+  setLightboxZoom(!lightboxBackdrop.classList.contains('is-zoomed'));
+});
 lightboxClose.addEventListener('click', closeLightbox);
 lightboxBackdrop.addEventListener('click', (e) => { if (e.target === lightboxBackdrop) closeLightbox(); });
 lightboxBackdrop.addEventListener('keydown', event => trapDialogFocus(event, lightboxBackdrop));
+
+let lightboxPointerStartX = null;
+let lightboxDidSwipe = false;
+lightboxImg.addEventListener('pointerdown', event => {
+  lightboxPointerStartX = event.clientX;
+  lightboxDidSwipe = false;
+  lightboxImg.setPointerCapture?.(event.pointerId);
+});
+lightboxImg.addEventListener('pointerup', event => {
+  if (lightboxPointerStartX === null) return;
+  const distance = event.clientX - lightboxPointerStartX;
+  lightboxPointerStartX = null;
+  if (lightboxBackdrop.classList.contains('is-zoomed')) return;
+  if (Math.abs(distance) < 45) return;
+  lightboxDidSwipe = true;
+  openLightbox(currentIndex + (distance < 0 ? 1 : -1));
+});
+lightboxImg.addEventListener('click', () => {
+  if (lightboxDidSwipe) {
+    lightboxDidSwipe = false;
+    return;
+  }
+  setLightboxZoom(!lightboxBackdrop.classList.contains('is-zoomed'));
+});
 window.addEventListener('keydown', (e) => {
   if (modalBackdrop.classList.contains('open') && e.key === 'Escape') {
     closeStoryModal();
@@ -239,16 +306,6 @@ window.addEventListener('keydown', (e) => {
   if (e.key === 'ArrowRight') openLightbox(currentIndex + 1);
   if (e.key === 'ArrowLeft') openLightbox(currentIndex - 1);
 });
-
-// 모바일 스와이프로도 사진 넘기기
-let touchStartX = 0;
-lightboxBackdrop.addEventListener('touchstart', (e) => {
-  touchStartX = e.changedTouches[0].clientX;
-}, { passive: true });
-lightboxBackdrop.addEventListener('touchend', (e) => {
-  const dx = e.changedTouches[0].clientX - touchStartX;
-  if (Math.abs(dx) > 40) openLightbox(currentIndex + (dx < 0 ? 1 : -1));
-}, { passive: true });
 
 /* ---------- Scroll-driven reveal (IntersectionObserver) ---------- */
 const revealSelectors = '.bento-card, .project-card, .contact-icons, .design-item';
