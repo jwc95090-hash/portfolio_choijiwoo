@@ -3,68 +3,27 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="format-detection" content="telephone=no">
   <title>TRIPPICK UX/UI Portfolio | 최지우</title>
-  <meta name="description" content="TRIPPICK 캠핑 예약 플랫폼 UX/UI 포트폴리오. 문제 정의, 리서치, 핵심 사용자 흐름, 솔루션, 검증 계획, 접근성과 회고를 담았습니다.">
-  <meta name="theme-color" content="#0b1c13">
+  <meta name="description" content="TRIPPICK 캠핑 예약 플랫폼 UX/UI 포트폴리오. 프로젝트 개요, 리서치, 핵심 페인포인트, 사용자 흐름, 솔루션, 검증 계획, 접근성, 트레이드오프와 회고를 담았습니다.">
+  <meta name="theme-color" content="#102319">
   <style>
-    :root{--bg:#0b1c13;--panel:rgba(8,24,16,.94);--text:#f4f0e6;--line:rgba(244,240,230,.24);--accent:#ad8a4c;--accent2:#f4f0e6}
     *{box-sizing:border-box}
-    html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:Pretendard,"Noto Sans KR",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    html,body{margin:0;min-height:100%;background:#102319}
     body{overflow-x:hidden}
-    .skip{position:fixed;left:50%;top:8px;z-index:1000;transform:translate(-50%,-160%);padding:10px 14px;border-radius:999px;background:#f4f0e6;color:#172218;text-decoration:none;transition:.2s}
-    .skip:focus{transform:translate(-50%,0)}
-    .toolbar{position:fixed;z-index:100;top:max(12px,env(safe-area-inset-top));left:12px;right:12px;display:flex;align-items:center;justify-content:space-between;gap:12px;pointer-events:none}
-    .toolbar__group{display:flex;gap:8px;flex-wrap:wrap;pointer-events:auto}
-    .btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 16px;border:1px solid var(--line);border-radius:999px;background:var(--panel);box-shadow:0 8px 28px rgba(0,0,0,.24);color:var(--text);text-decoration:none;font-size:13px;font-weight:700;backdrop-filter:blur(12px);cursor:pointer;white-space:nowrap}
-    .btn--site{background:var(--accent2);border-color:var(--accent2);color:#172218}
-    .btn--host{border-color:var(--accent);color:#f4f0e6}
-    .viewer{width:100%;overflow-x:hidden}
-    .case-study{width:100%;max-width:1920px;margin:0 auto;background:#0b1c13}
-    .slice{display:block;width:100%;height:auto;margin:0;border:0}
-    .viewer.is-native{overflow-x:auto}
-    .viewer.is-native .case-study{width:1920px;max-width:none}
-    :focus-visible{outline:3px solid #d7b66f;outline-offset:3px}
-    @media(max-width:760px){.toolbar{top:8px;left:8px;right:8px;align-items:flex-start}.toolbar__group{gap:6px}.btn{min-height:40px;padding:0 11px;font-size:11px}.toolbar__group--tools .btn:first-child{display:none}}
-    @media(max-width:470px){.btn--host{display:none}}
-    @media print{.toolbar,.skip{display:none}.viewer,.viewer.is-native{overflow:visible}.viewer.is-native .case-study{width:100%;max-width:1920px}}
+    .portfolio{position:relative;width:min(100%,1920px);margin:0 auto;background:#102319}
+    .portfolio>img{display:block;width:100%;height:auto;margin:0;border:0}
+    .hotspot{position:absolute;display:block;background:transparent;color:transparent;text-indent:-9999px;overflow:hidden;border:0;z-index:2}
+    .hotspot:focus-visible{outline:3px solid #d5b06b;outline-offset:2px;text-indent:-9999px}
+    .site-link{left:41.09375%;top:5.8440474%;width:7.8125%;height:.4007347%}
+    .host-link{left:49.53125%;top:5.8440474%;width:9.375%;height:.4007347%}
   </style>
 </head>
 <body>
-  <!-- Figma source: trippick-ux-portfolio_final_reviewed_2026 -->
-  <a class="skip" href="#case-study">케이스 스터디로 이동</a>
-  <nav class="toolbar" aria-label="포트폴리오 보기 도구">
-    <div class="toolbar__group">
-      <a class="btn" href="index.html#projects">← 포트폴리오 홈</a>
-    </div>
-    <div class="toolbar__group toolbar__group--tools">
-      <button class="btn" id="nativeSizeToggle" type="button" aria-pressed="false">원본 크기 보기</button>
-      <a class="btn btn--site" href="https://jwc95090-hash.github.io/trippick-site/" target="_blank" rel="noopener noreferrer">사이트 보기 ↗</a>
-      <a class="btn btn--host" href="https://jwc95090-hash.github.io/trippick-site/trippick-host/admin-camp.html" target="_blank" rel="noopener noreferrer">호스트센터 보기 ↗</a>
-    </div>
-  </nav>
-  <main class="viewer" id="viewer">
-    <article class="case-study" id="case-study" aria-label="TRIPPICK UX/UI 케이스 스터디">
-      <img class="slice" src="assets/trippick-reviewed-01.jpg?v=20260830-final" alt="TRIPPICK UX/UI 포트폴리오 1" fetchpriority="high" decoding="async">
-      <img class="slice" src="assets/trippick-reviewed-02.jpg?v=20260830-final" alt="TRIPPICK UX/UI 포트폴리오 2" decoding="async">
-      <img class="slice" src="assets/trippick-reviewed-03.jpg?v=20260830-final" alt="TRIPPICK UX/UI 포트폴리오 3" loading="lazy" decoding="async">
-      <img class="slice" src="assets/trippick-reviewed-04.jpg?v=20260830-final" alt="TRIPPICK UX/UI 포트폴리오 4" loading="lazy" decoding="async">
-      <img class="slice" src="assets/trippick-reviewed-05.jpg?v=20260830-final" alt="TRIPPICK UX/UI 포트폴리오 5" loading="lazy" decoding="async">
-      <img class="slice" src="assets/trippick-reviewed-06.jpg?v=20260830-final" alt="TRIPPICK UX/UI 포트폴리오 6" loading="lazy" decoding="async">
-      <img class="slice" src="assets/trippick-reviewed-07.jpg?v=20260830-final" alt="TRIPPICK UX/UI 포트폴리오 7" loading="lazy" decoding="async">
-      <img class="slice" src="assets/trippick-reviewed-08.jpg?v=20260830-final" alt="TRIPPICK UX/UI 포트폴리오 8" loading="lazy" decoding="async">
-      <img class="slice" src="assets/trippick-reviewed-09.jpg?v=20260830-final" alt="TRIPPICK UX/UI 포트폴리오 9" loading="lazy" decoding="async">
-      <img class="slice" src="assets/trippick-reviewed-10.jpg?v=20260830-final" alt="TRIPPICK UX/UI 포트폴리오 10" loading="lazy" decoding="async">
-    </article>
+  <main class="portfolio" aria-label="TRIPPICK UX/UI 포트폴리오">
+    <img src="assets/portfolio/trippick-ux-portfolio_final_reviewed_2026.png?v=20260830-exact-final" width="1920" height="11978" alt="TRIPPICK UX/UI 포트폴리오 전체 화면" fetchpriority="high" decoding="async">
+    <a class="hotspot site-link" href="https://jwc95090-hash.github.io/trippick-site/" target="_blank" rel="noopener noreferrer" aria-label="TRIPPICK 사이트 보기">TRIPPICK 사이트 보기</a>
+    <a class="hotspot host-link" href="https://jwc95090-hash.github.io/trippick-site/trippick-host/admin-camp.html" target="_blank" rel="noopener noreferrer" aria-label="TRIPPICK 호스트센터 보기">TRIPPICK 호스트센터 보기</a>
   </main>
-  <script>
-    const viewer=document.getElementById('viewer');
-    const toggle=document.getElementById('nativeSizeToggle');
-    toggle.addEventListener('click',()=>{
-      const native=viewer.classList.toggle('is-native');
-      toggle.setAttribute('aria-pressed',String(native));
-      toggle.textContent=native?'화면에 맞추기':'원본 크기 보기';
-      if(native)viewer.scrollLeft=Math.max(0,(1920-viewer.clientWidth)/2);
-    });
-  </script>
 </body>
 </html>
