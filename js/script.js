@@ -418,3 +418,56 @@ if (!prefersReducedMotion) document.querySelectorAll('.bento-card, .ai-card, .pr
     card.style.setProperty('--ry', '0deg');
   });
 });
+
+/* ---------- 디자인 갤러리 전체화면 보기 UX 보강 ---------- */
+if (designTrack) {
+  const designSection = document.getElementById('design');
+  const designIntro = designSection?.querySelector('.design-works-intro');
+
+  if (designIntro && !document.getElementById('designClickHint')) {
+    const hint = document.createElement('p');
+    hint.id = 'designClickHint';
+    hint.className = 'design-click-hint';
+    hint.innerHTML = '<span aria-hidden="true">↗</span> 이미지를 클릭하면 전체 화면으로 크게 볼 수 있습니다.';
+    designIntro.insertAdjacentElement('afterend', hint);
+  }
+
+  if (!document.getElementById('designViewerEnhanceStyles')) {
+    const style = document.createElement('style');
+    style.id = 'designViewerEnhanceStyles';
+    style.textContent = `
+      .design-click-hint{
+        display:inline-flex;align-items:center;gap:7px;
+        margin:-30px 0 22px;padding:8px 12px;border-radius:999px;
+        background:rgba(91,79,233,.09);border:1px solid rgba(91,79,233,.14);
+        color:var(--ink-soft);font-size:13px;font-weight:700;line-height:1.3;
+      }
+      .design-click-hint span{color:var(--violet);font-size:15px;}
+      .design-item{cursor:zoom-in;}
+      .design-item::after{
+        content:'전체보기 ↗';position:absolute;z-index:6;left:16px;top:16px;
+        padding:7px 11px;border-radius:999px;background:rgba(18,19,26,.72);
+        color:#fff;font-size:12px;font-weight:800;line-height:1;letter-spacing:-.02em;
+        opacity:0;transform:translateY(4px);pointer-events:none;
+        backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+        transition:opacity .2s ease,transform .2s ease;
+      }
+      .design-item:hover::after,.design-item:focus-visible::after{
+        opacity:1;transform:translateY(0);
+      }
+      @media (hover:none){.design-item::after{opacity:.88;transform:none;}}
+      @media (max-width:760px){.design-click-hint{margin:-28px 0 18px;font-size:12px;}}
+    `;
+    document.head.appendChild(style);
+  }
+
+  // 무한 슬라이드를 위해 복제된 카드도 클릭하면 같은 라이트박스가 열리도록 보강
+  designTrack.addEventListener('click', event => {
+    const item = event.target.closest('.design-item');
+    if (!item || item.hidden || item.getAttribute('aria-hidden') !== 'true') return;
+    const index = Number(item.dataset.index);
+    if (!Number.isFinite(index)) return;
+    lightboxReturnFocus = designViewAll || null;
+    openLightbox(index);
+  });
+}
