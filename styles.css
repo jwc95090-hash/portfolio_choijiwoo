@@ -57,7 +57,7 @@ body {
 
 @media (min-width: 1024px) {
   .portfolio-page-trippick .figma-render {
-    width: max(1920px, 115vw);
+    width: 1920px;
     max-width: none;
   }
 }
