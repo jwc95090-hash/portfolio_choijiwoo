@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="format-detection" content="telephone=no">
   <title>TRIPPICK UX/UI Portfolio</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=20260830-trippick-desktop">
 </head>
-<body class="portfolio-page">
+<body class="portfolio-page portfolio-page-trippick">
   <main aria-label="TRIPPICK UX/UI 포트폴리오">
     <img
       class="figma-render"
@@ -21,5 +21,28 @@
       <img class="figma-render" src="assets/trippick-fallback.jpg" alt="TRIPPICK UX/UI 포트폴리오 전체 화면">
     </noscript>
   </main>
+  <script>
+    (() => {
+      const image = document.querySelector('.portfolio-page-trippick .figma-render');
+      const desktop = window.matchMedia('(min-width: 1024px)');
+
+      if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
+      const centerPortfolio = () => {
+        if (!desktop.matches) return;
+
+        const overflow = document.documentElement.scrollWidth - window.innerWidth;
+        if (overflow > 0) window.scrollTo(Math.round(overflow / 2), window.scrollY);
+      };
+
+      if (image.complete) {
+        requestAnimationFrame(() => requestAnimationFrame(centerPortfolio));
+      } else {
+        image.addEventListener('load', centerPortfolio, { once: true });
+      }
+
+      window.addEventListener('load', centerPortfolio, { once: true });
+    })();
+  </script>
 </body>
 </html>
