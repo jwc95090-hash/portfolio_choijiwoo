@@ -12,7 +12,7 @@ body {
 .figma-original {
   position: relative;
   width: 100%;
-  max-width: 1927px;
+  max-width: 1920px;
   margin: 0 auto;
 }
 
@@ -21,17 +21,4 @@ body {
   width: 100%;
   height: auto;
   image-rendering: auto;
-}
-
-/* 첫 페이지 원본 이미지에 포함된 '개선 전·후 프로토타입' 버튼만 배경색으로 가림 */
-.prototype-button-mask {
-  position: absolute;
-  z-index: 3;
-  left: 5.45%;
-  top: 10.12%;
-  width: 13%;
-  height: 0.42%;
-  display: block;
-  background: #fafafa;
-  pointer-events: none;
 }
