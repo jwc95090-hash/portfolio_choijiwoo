@@ -10,6 +10,7 @@ body {
 }
 
 .figma-original {
+  position: relative;
   width: 100%;
   max-width: 1927px;
   margin: 0 auto;
@@ -20,4 +21,18 @@ body {
   width: 100%;
   height: auto;
   image-rendering: auto;
+}
+
+/* 첫 페이지의 '개선 전·후 프로토타입 ↗' 문구만 가리고 버튼 형태는 유지 */
+.prototype-label-mask {
+  position: absolute;
+  z-index: 3;
+  left: 6.05%;
+  top: 11.163%;
+  width: 11.644%;
+  height: 0.249%;
+  display: block;
+  background: #ff6f0f;
+  border-radius: 999px;
+  pointer-events: none;
 }
