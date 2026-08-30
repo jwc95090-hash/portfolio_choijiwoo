@@ -21,36 +21,6 @@ themeToggle.addEventListener('click', () => {
   applyTheme(current === 'dark' ? 'light' : 'dark');
 });
 
-/* ---------- 커스텀 커서 (dot + lerp로 따라오는 ring, junni.co.jp 스타일) ---------- */
-const cursorDot = document.getElementById('cursorDot');
-const cursorRing = document.getElementById('cursorRing');
-const supportsCustomCursor = window.matchMedia('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)').matches;
-if (supportsCustomCursor && cursorDot && cursorRing) {
-  let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
-  let ringX = mouseX, ringY = mouseY;
-  window.addEventListener('mousemove', (event) => {
-    mouseX = event.clientX;
-    mouseY = event.clientY;
-    cursorDot.style.left = `${mouseX}px`;
-    cursorDot.style.top = `${mouseY}px`;
-  }, { passive: true });
-  const tickCursorRing = () => {
-    ringX += (mouseX - ringX) * 0.16;
-    ringY += (mouseY - ringY) * 0.16;
-    cursorRing.style.left = `${ringX}px`;
-    cursorRing.style.top = `${ringY}px`;
-    requestAnimationFrame(tickCursorRing);
-  };
-  requestAnimationFrame(tickCursorRing);
-  document.querySelectorAll('a, button, input, textarea, .design-item, .ai-card, .bento-card').forEach(el => {
-    el.addEventListener('mouseenter', () => cursorRing.classList.add('hover'));
-    el.addEventListener('mouseleave', () => cursorRing.classList.remove('hover'));
-  });
-} else {
-  cursorDot?.remove();
-  cursorRing?.remove();
-}
-
 /* ---------- 네비게이션: 스크롤 배경 + 스크롤스파이 + 스무스스크롤 ---------- */
 const nav = document.getElementById('nav');
 const navLinks = document.querySelectorAll('.nav-links a');
