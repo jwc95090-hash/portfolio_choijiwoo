@@ -4,37 +4,50 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>당근부동산 UX/UI Redesign | 최지우</title>
-  <meta name="description" content="거래 유형과 신뢰 정보를 더 빠르게 판단하도록 개선한 당근부동산 UX/UI 리디자인 케이스 스터디">
+  <meta name="description" content="사용자 리뷰와 경쟁 서비스 분석을 바탕으로 매물 탐색 흐름과 신뢰 정보 위계를 개선한 당근부동산 UX/UI 리디자인 케이스 스터디">
   <link rel="canonical" href="https://jwc95090-hash.github.io/portfolio_choijiwoo/karrot-portfolio.html">
   <meta property="og:type" content="article">
   <meta property="og:locale" content="ko_KR">
   <meta property="og:url" content="https://jwc95090-hash.github.io/portfolio_choijiwoo/karrot-portfolio.html">
   <meta property="og:title" content="당근부동산 UX/UI Redesign | 최지우">
-  <meta property="og:description" content="리서치, 사용자 여정, IA, 와이어프레임과 최종 UI를 담은 당근부동산 UX/UI 리디자인">
+  <meta property="og:description" content="리서치부터 사용자 흐름, 정보 구조, UI 설계와 Figma 프로토타입까지 문제 해결 과정을 담은 UX/UI 리디자인">
   <meta property="og:image" content="https://jwc95090-hash.github.io/portfolio_choijiwoo/assets/projects/karrot-case-study.jpg">
   <meta property="og:image:alt" content="당근부동산 UX/UI 리디자인 케이스 스터디 전체 화면">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
   <meta name="theme-color" content="#f7f7f7">
   <style>
-    :root { color-scheme: light; --bg: #f7f7f7; --panel: rgba(255,255,255,.9); --line: rgba(0,0,0,.16); --text: #262626; --focus: #ff6f0f; }
+    :root { color-scheme: light; --bg: #f7f7f7; --panel: rgba(255,255,255,.92); --line: rgba(0,0,0,.16); --text: #262626; --muted: #666; --focus: #ff6f0f; --accent: #ff6f0f; }
     * { box-sizing: border-box; }
     html, body { margin: 0; min-height: 100%; background: var(--bg); }
-    body { overflow-x: hidden; font-family: Pretendard, "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    body { overflow-x: hidden; font-family: Pretendard, "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--text); }
     .skip-link { position: fixed; top: 8px; left: 50%; z-index: 100; padding: 10px 14px; border-radius: 999px; background: #222; color: #fff; transform: translate(-50%, -160%); transition: transform .2s; }
     .skip-link:focus { transform: translate(-50%, 0); }
     .toolbar { position: fixed; z-index: 50; top: max(14px, env(safe-area-inset-top)); right: 14px; left: 14px; display: flex; justify-content: space-between; gap: 12px; pointer-events: none; }
     .toolbar a, .toolbar button { pointer-events: auto; min-height: 42px; padding: 0 15px; border: 1px solid var(--line); border-radius: 999px; background: var(--panel); box-shadow: 0 8px 28px rgba(0,0,0,.1); color: var(--text); font: 700 13px/1 inherit; text-decoration: none; backdrop-filter: blur(12px); cursor: pointer; }
     .viewer { width: 100%; overflow-x: hidden; }
     .case-study { width: 100%; max-width: 1927px; margin: 0 auto; }
+    .case-intro { padding: 116px 48px 64px; background: #fff; border-bottom: 1px solid rgba(0,0,0,.08); }
+    .case-intro-inner { max-width: 1180px; margin: 0 auto; }
+    .case-kicker { margin: 0 0 16px; color: var(--accent); font-size: 13px; font-weight: 800; letter-spacing: .12em; }
+    .case-intro h1 { margin: 0; font-size: clamp(34px, 5vw, 68px); line-height: 1.08; letter-spacing: -.04em; }
+    .case-lead { max-width: 880px; margin: 24px 0 0; color: #444; font-size: clamp(17px, 2vw, 22px); line-height: 1.7; }
+    .case-process { margin: 26px 0 0; font-size: 15px; line-height: 1.7; color: var(--muted); }
+    .case-tags { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 28px; }
+    .case-tags span { padding: 9px 13px; border: 1px solid rgba(0,0,0,.12); border-radius: 999px; background: #fafafa; font-size: 13px; font-weight: 700; }
     .case-study img { display: block; width: 100%; max-width: none; height: auto; image-rendering: auto; }
     .viewer.is-native { overflow-x: auto; }
     .viewer.is-native .case-study { width: 1927px; max-width: none; }
-    .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
     :focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
-    @media (max-width: 640px) { .toolbar { top: 9px; right: 9px; left: 9px; } .toolbar a, .toolbar button { min-height: 38px; padding: 0 12px; font-size: 12px; } }
+    @media (max-width: 640px) {
+      .toolbar { top: 9px; right: 9px; left: 9px; }
+      .toolbar a, .toolbar button { min-height: 38px; padding: 0 12px; font-size: 12px; }
+      .case-intro { padding: 92px 22px 42px; }
+      .case-lead { margin-top: 18px; }
+      .case-tags { margin-top: 22px; }
+    }
     @media (prefers-reduced-motion: reduce) { .skip-link { transition: none; } }
-    @media print { .toolbar, .skip-link { display: none; } .viewer, .viewer.is-native { overflow: visible; } .viewer.is-native .case-study { width: 100%; max-width: 1927px; } }
+    @media print { .toolbar, .skip-link { display: none; } .viewer, .viewer.is-native { overflow: visible; } .viewer.is-native .case-study { width: 100%; max-width: 1927px; } .case-intro { padding-top: 40px; } }
   </style>
 </head>
 <body>
@@ -45,9 +58,19 @@
   </nav>
   <main class="viewer" id="viewer">
     <article class="case-study" id="case-study" aria-labelledby="case-study-title">
-      <header class="visually-hidden">
-        <h1 id="case-study-title">당근부동산 UX/UI 리디자인 케이스 스터디</h1>
-        <p>사용자 리뷰와 경쟁 서비스 분석을 바탕으로 거래 유형, 매물 신뢰 정보, 탐색과 비교 흐름을 개선하고 Figma 프로토타입으로 검증한 프로젝트입니다.</p>
+      <header class="case-intro">
+        <div class="case-intro-inner">
+          <p class="case-kicker">UX/UI REDESIGN · APP</p>
+          <h1 id="case-study-title">당근부동산 APP REDESIGN</h1>
+          <p class="case-lead">초보 임차인이 매물의 거래 방식과 신뢰 정보를 쉽게 판단할 수 있도록, 탐색 과정의 문제를 정의하고 사용자 흐름과 정보 위계를 개선한 UX/UI 리디자인 프로젝트입니다.</p>
+          <p class="case-process"><strong>Design Focus</strong> · 사용자 리뷰·경쟁 서비스 분석 → 페르소나·사용자 여정 → User Flow·정보 구조 → UI 디자인 → Figma 프로토타입 비교</p>
+          <div class="case-tags" aria-label="프로젝트 역할">
+            <span>UX Research</span>
+            <span>User Flow</span>
+            <span>UI Design</span>
+            <span>Figma Prototype</span>
+          </div>
+        </div>
       </header>
       <img src="assets/projects/karrot-case-study.jpg?v=20260826" width="1927" height="24770" alt="당근부동산 UX/UI 리디자인 케이스 스터디 전체 화면. 데스크 리서치, 경쟁사 분석, 페르소나, 사용자 여정, 문제 정의, 사용자 흐름, 정보 구조, 와이어프레임, 검증, 최종 UI와 디자인 시스템으로 구성되어 있습니다." fetchpriority="high" decoding="async">
     </article>
