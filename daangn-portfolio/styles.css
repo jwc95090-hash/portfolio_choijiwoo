@@ -28,6 +28,7 @@ body {
   padding: 0;
   line-height: 0;
   overflow: hidden;
+  background: #ffffff;
 }
 
 .portfolio-slide img {
@@ -45,8 +46,17 @@ body {
   width: 100%;
 }
 
+/* 첫 개요와 다음 슬라이드가 맞닿아 겹쳐 보이지 않도록 명확한 흰 여백을 둡니다. */
+.portfolio-slide--overview + .portfolio-slide {
+  padding-top: 40px;
+}
+
 @media (max-width: 720px) {
   .portfolio-stack {
     width: 100%;
+  }
+
+  .portfolio-slide--overview + .portfolio-slide {
+    padding-top: 20px;
   }
 }
