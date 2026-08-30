@@ -23,16 +23,15 @@ body {
   image-rendering: auto;
 }
 
-/* 첫 페이지의 '개선 전·후 프로토타입 ↗' 문구만 가리고 버튼 형태는 유지 */
-.prototype-label-mask {
+/* 첫 페이지 원본 이미지에 포함된 '개선 전·후 프로토타입' 버튼 전체를 배경과 동일하게 가림 */
+.prototype-button-mask {
   position: absolute;
   z-index: 3;
-  left: 6.05%;
-  top: 11.163%;
-  width: 11.644%;
-  height: 0.249%;
+  left: 5.55%;
+  top: 11.10%;
+  width: 12.70%;
+  height: 0.37%;
   display: block;
-  background: #ff6f0f;
-  border-radius: 999px;
+  background: #fafafa;
   pointer-events: none;
 }
