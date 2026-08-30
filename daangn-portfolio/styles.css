@@ -46,11 +46,6 @@ body {
   width: 100%;
 }
 
-/* 두 번째 소스 이미지 상단에 남아 있던 이전 슬라이드 조각을 잘라내 겹쳐 보이는 부분만 제거 */
-.portfolio-slide--competition img {
-  margin-top: -35%;
-}
-
 @media (max-width: 720px) {
   .portfolio-stack {
     width: 100%;
