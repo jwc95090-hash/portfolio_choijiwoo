@@ -9,29 +9,44 @@ body {
   background: #ffffff;
 }
 
-.figma-original {
+body {
+  overflow-x: hidden;
+}
+
+.portfolio-stack {
   width: 100%;
   max-width: 1920px;
   margin: 0 auto;
+  background: #ffffff;
+  line-height: 0;
 }
 
-.figma-original img {
+.portfolio-slide {
   display: block;
   width: 100%;
-  height: auto;
-  image-rendering: auto;
-}
-
-.overview-image,
-.portfolio-rest {
   margin: 0;
-}
-
-.portfolio-rest {
+  padding: 0;
+  line-height: 0;
   overflow: hidden;
 }
 
-/* 기존 전체 보드에서 첫 16:9 개요 프레임(440 × 248px)을 숨긴다. */
-.portfolio-rest img {
-  margin-top: -56.363636%;
+.portfolio-slide img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: none;
+  margin: 0;
+  border: 0;
+  image-rendering: auto;
+}
+
+/* 첫 개요는 3840px 2배 export를 1920px 영역에 축소 표시해 선명도를 유지합니다. */
+.portfolio-slide--overview img {
+  width: 100%;
+}
+
+@media (max-width: 720px) {
+  .portfolio-stack {
+    width: 100%;
+  }
 }
