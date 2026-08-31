@@ -31,6 +31,7 @@ body{
   font-family:'Pretendard','Noto Sans KR',sans-serif;
   line-height:1.6; overflow-x:hidden;
   transition:background .3s ease, color .3s ease;
+  word-break:keep-all;
 }
 h1,h2,h3{font-family:'Space Grotesk',sans-serif; letter-spacing:-0.02em;}
 em{font-style:normal; color:var(--violet);}
@@ -41,7 +42,7 @@ body.dialog-open{overflow:hidden;}
 .skip-link:focus{transform:none;}
 a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--violet);outline-offset:3px;}
 input, textarea{font-family:inherit;}
-.inner{max-width:1200px; margin:0 auto; padding:0 24px;}
+.inner{max-width:1300px; margin:0 auto; padding:0 24px;}
 .eyebrow{font-size:14px; font-weight:700; letter-spacing:.16em; color:var(--violet); margin-bottom:16px;}
 .eyebrow.light{color:#8B7FFF;}
 .section-title{font-size:38px; margin-bottom:10px;}
@@ -194,7 +195,9 @@ input, textarea{font-family:inherit;}
 .project-body h3{font-size:20px; margin-bottom:10px;}
 .project-meta{font-size:13px; font-weight:600; color:var(--violet-deep); margin-bottom:12px !important; display:flex; flex-direction:column; gap:4px;}
 .project-meta strong{color:var(--ink); font-weight:800; margin-right:6px;}
-.project-body p{font-size:15px; color:var(--ink-soft); margin-bottom:18px; line-height:1.65;}
+.project-body p{font-size:15px; color:var(--ink-soft); margin-bottom:14px; line-height:1.65;}
+.project-points{list-style:disc; padding-left:1.25rem; margin-bottom:18px; color:var(--ink-soft); font-size:15px; line-height:1.7;}
+.project-points li{margin-bottom:8px;}
 
 .ps-meta{display:flex; flex-direction:column; gap:10px; margin-bottom:18px; padding:16px 18px; border-radius:12px; background:var(--bg-soft); border:1px solid var(--line);}
 .ps-item span{display:block; font-size:11px; font-weight:800; letter-spacing:.08em; color:var(--violet-deep); margin-bottom:3px;}
@@ -423,6 +426,8 @@ input, textarea{font-family:inherit;}
 .st-text{min-width:0;}
 .st-text strong{display:block; font-size:14.5px; font-weight:800; margin-bottom:5px; color:var(--ink);}
 .skill-tool-row p{font-size:14.5px; color:var(--ink-soft); line-height:1.55; word-break:keep-all;}
+
+p, li, a, span, strong, h1, h2, h3, .section-sub, .st-text, .project-body, .cert-info{word-break:keep-all;}
 
 @media(max-width:980px){
   .skill-tool-group{grid-template-columns:1fr; gap:18px;}
