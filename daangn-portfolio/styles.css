@@ -18,7 +18,6 @@ body {
   max-width: 1920px;
   margin: 0 auto;
   background: #ffffff;
-  line-height: 0;
 }
 
 .portfolio-slide {
@@ -27,27 +26,13 @@ body {
   margin: 0;
   padding: 0;
   line-height: 0;
-  overflow: hidden;
   background: #ffffff;
 }
 
 .portfolio-slide img {
-  display: block;
-  width: 100%;
+  max-width: 100%;
   height: auto;
-  max-width: none;
-  margin: 0;
+  display: block;
+  margin: 0 auto;
   border: 0;
-  image-rendering: auto;
-}
-
-/* 첫 개요는 3840px 2배 export를 1920px 영역에 축소 표시 */
-.portfolio-slide--overview img {
-  width: 100%;
-}
-
-@media (max-width: 720px) {
-  .portfolio-stack {
-    width: 100%;
-  }
 }
